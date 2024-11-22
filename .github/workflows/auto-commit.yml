@@ -1,0 +1,35 @@
+name: Auto Commit Workflow
+
+on:
+  schedule:
+    # Run every hour
+    - cron: "0 * * * *"
+
+  # Allows manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Make changes to the log file
+      - name: Make Changes
+        run: |
+          echo "Automated Update on $(date)" >> log.txt
+
+      # Step 3: Configure Git credentials
+      - name: Configure Git
+        run: |
+          git config user.name "lucbarika100B"
+          git config user.email "lucbarika@gmail.com"
+
+      # Step 4: Commit and push changes
+      - name: Commit and Push
+        run: |
+          git add .
+          git commit -m "Automated Commit on $(date)"
+          git push
